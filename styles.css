@@ -1,0 +1,252 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+    display: none;
+}
+
+/* Welcome Page Styles */
+.policy-section {
+    margin: 20px 0;
+}
+
+.consent {
+    margin: 20px 0;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.validation-message {
+    color: #ff0000;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Question Styles */
+.question-container {
+    padding: 20px;
+}
+
+.options-normal {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.option:hover {
+    background-color: #f0f0f0;
+}
+
+.option.selected {
+    background-color: #e3f2fd;
+    border-color: #2196f3;
+}
+
+/* Table Format Options */
+.options-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.options-table td {
+    padding: 15px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.options-table tr:hover td {
+    background-color: #f0f0f0;
+}
+
+.options-table td.selected {
+    background-color: #e3f2fd;
+    border-color: #0a0a0a;
+}
+
+/* Timer Styles */
+.timer-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.timer {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.timer.time-limit {
+    color: #2fd33d;
+}
+
+.timer.time-free {
+    color: #1976d2;
+}
+
+/* Likert Scale Styles */
+.likert-scale {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.likert-option {
+    text-align: center;
+}
+
+.likert-option input[type="radio"] {
+    display: none;
+}
+
+.likert-option label {
+    display: block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.likert-option input[type="radio"]:checked + label {
+    background-color: #2196f3;
+    color: white;
+    border-color: #2196f3;
+}
+
+/* Button Styles */
+button {
+    padding: 10px 20px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #1976d2;
+}
+
+button:disabled {
+    background-color: #bdbdbd;
+    cursor: not-allowed;
+}
+
+/* Background Colors for Questions */
+.bg-green {
+    background-color: #bae7be;
+}
+
+.bg-red {
+    background-color: #d38383;
+}
+
+.bg-blue {
+    background-color: #020608;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .page {
+        padding: 20px;
+    }
+
+    .likert-scale {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .likert-option {
+        flex: 1 1 20%;
+        margin: 5px;
+    }
+}
+
+.options-table tr {
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.options-table tr:hover {
+    background-color: #f0f0f0;
+}
+
+.options-table tr.selected {
+    background-color: #e3f2fd;
+}
+
+.options-table tr.selected td {
+    background-color: #e3f2fd;
+    border-color: #2196f3;
+}
+
+
+@media (max-width: 480px) {
+    .likert-option label {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+    }
+}
