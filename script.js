@@ -10,27 +10,27 @@ const questions = [
             "Park your car and take a cab to reach faster"
         ],
         displayType: "normal",
-        background: "red",
-        timeLimit: 20 // No time limit
+        background: "#ff0000",  // Red color for time limit questions
+        timeLimit: 20
     },
     {
         id: 2,
         text: "You're buying a laptop for work. Which one do you pick?",
         headers: ["Amount", "RAM", "Processor", "Storage"],
         options: [
-            ["Amount", "Ram", "processor", "Storage"],
+            ["Amount", "RAM", "Processor", "Storage"],
             ["₹50,000", "8GB RAM", "i5 processor", "256GB SSD"],
             ["₹55,000", "16GB RAM", "i5 processor", "512GB SSD"],
             ["₹60,000", "8GB RAM", "i7 processor", "1TB HDD"],
             ["₹48,000", "8GB RAM", "Ryzen 5", "256GB SSD"]
         ],
         displayType: "table",
-        background: "green",
+        background: "#fdee98",  // Blue color for time free questions
         timeLimit: 0   
     },
     // {
     //     id: 3,
-    //     text: "You're stuck in a traffic jam and running late for an important meeting. What do you do?",
+    //     text: "nasir nasir nasir nasir nasir",
     //     options: [
     //         "Wait in traffic and inform your team about the delay",
     //         "Take a longer but faster toll road for ₹200",
@@ -38,26 +38,26 @@ const questions = [
     //         "Park your car and take a cab to reach faster"
     //     ],
     //     displayType: "normal",
-    //     background: "red",
-    //     timeLimit: 10 // No time limit
+    //     background: "#fdee98",  // white color for time free questions
+    //     timeLimit: 0
     // },
     // {
     //     id: 4,
     //     text: "You're buying a laptop for work. Which one do you pick?",
+    //     headers: ["Amount", "RAM", "Processor", "Storage"],
     //     options: [
-    //         ["₹50,000", "8GB RAM", "i5 processor", "256GB SSD"],
-    //         ["₹55,000", "16GB RAM", "i5 processor", "512GB SSD"],
-    //         ["₹60,000", "8GB RAM", "i7 processor", "1TB HDD"],
-    //         ["₹48,000", "8GB RAM", "Ryzen 5", "256GB SSD"]
+    //         ["saba", "nari", "kadir", "zeba","Hussain"],
+    //         ["₹50,000", "8GB RAM", "i5 processor", "256GB SSD","good"],
+    //         ["₹55,000", "16GB RAM", "i5 processor", "512GB SSD","bad"],
+    //         ["₹60,000", "8GB RAM", "i7 processor", "1TB HDD","fare"],
+    //         ["₹48,000", "8GB RAM", "Ryzen 5", "256GB SSD","not"]
     //     ],
     //     displayType: "table",
-    //     background: "green",
-    //     timeLimit: 0  
-    // },
-    // Add more questions following the same structure
+    //     background: "#ff0000",  
+    //     timeLimit: 30   
+    // }
+    // // Add more questions following the same structure
 ];
-
-
 
 let currentQuestion = 0;
 let responses = {
@@ -143,11 +143,9 @@ function displayQuestion(question) {
     const $questionContainer = $('#question-page');
     const $questionText = $('#question-text');
     const $optionsContainer = $('#options-container');
+    const $timer = $('#timer');
 
-    // Set background color
-    $questionContainer.removeClass('bg-green bg-red').addClass(`bg-${question.background}`);
-
-    // Display question text
+    // Set question text
     $questionText.text(question.text);
 
     // Clear previous options
@@ -160,19 +158,59 @@ function displayQuestion(question) {
         displayNormalOptions(question.options, $optionsContainer);
     }
 
+    // Set timer color and start timer
+    $timer.css({
+        'background-color': question.background || (question.timeLimit > 0 ? '#ff0000' : '#fdee98')
+    });
+
     // Setup timer
     currentTimer = setupQuestionTimer(question);
 
-    // Ensure the next button is initially disabled
-    $('#next-question').prop('disabled', true);
-
-    // Set up the next button functionality
+    // Reset next button state
     $('#next-question').off('click').on('click', function () {
         saveResponse();
         displayLikertScale();
     });
 
     showPage('question-page');
+}
+
+function displayTableOptions(options, container) {
+    const $table = $('<table>').addClass('options-table');
+    
+    // Create header row
+    const headers = options[0];
+    const $thead = $('<thead>');
+    const $headerRow = $('<tr>');
+    
+    headers.forEach(header => {
+        $('<th>')
+            .text(header)
+            .appendTo($headerRow);
+    });
+    
+    $thead.append($headerRow);
+    $table.append($thead);
+    
+    // Create tbody for data rows
+    const $tbody = $('<tbody>');
+    
+    // Add data rows (skip the header row)
+    for(let i = 1; i < options.length; i++) {
+        const $row = $('<tr>').data('value', i);
+        options[i].forEach(cell => {
+            $('<td>')
+                .text(cell)
+                .appendTo($row);
+        });
+        
+        // Add click handler to the row
+        $row.on('click', handleTableRowSelection);
+        $tbody.append($row);
+    }
+    
+    $table.append($tbody);
+    container.append($table);
 }
 
 function displayNormalOptions(options, container) {
@@ -191,60 +229,32 @@ function displayNormalOptions(options, container) {
     container.append($optionsList);
 }
 
-function displayTableOptions(options, container) {
-    const $table = $('<table>').addClass('options-table');
-
-    options.forEach((option, index) => {
-        const $row = $('<tr>').data('value', index);  // Add data-value to the row
-        option.forEach(cell => {
-            $('<td>')
-                .text(cell)
-                .appendTo($row);
-        });
-
-        // Add click handler to the entire row
-        $row.on('click', handleTableRowSelection);
-        $table.append($row);
-    });
-
-    container.append($table);
-}
-
 function handleTableRowSelection() {
-    const $row = $(this);
-    // Remove selection from all rows
     $('.options-table tr').removeClass('selected');
-    // Add selection to clicked row
-    $row.addClass('selected');
-    // Enable next button
+    $(this).addClass('selected');
     $('#next-question').prop('disabled', false);
 }
 
 function handleOptionSelection() {
-    $('.option, .options-table td').removeClass('selected');
+    $('.option').removeClass('selected');
     $(this).addClass('selected');
     $('#next-question').prop('disabled', false);
 }
 
 // Timer Setup
 function setupQuestionTimer(question) {
-    if (currentTimer) currentTimer.stop(); // Stop the previous timer
+    if (currentTimer) currentTimer.stop();
 
-    currentTimer = new Timer(
+    const timer = new Timer(
         question.timeLimit,
         question.timeLimit > 0 ? handleTimeLimitExpired : null
     );
 
-    $('#timer')
-        .removeClass('time-limit time-free')
-        .addClass(question.timeLimit > 0 ? 'time-limit' : 'time-free');
-
-    currentTimer.start();
-    return currentTimer;
+    timer.start();
+    return timer;
 }
 
 function handleTimeLimitExpired() {
-    // Save current response and move to next question
     saveResponse();
     moveToNextQuestion();
 }
@@ -271,22 +281,15 @@ function saveResponse() {
 
 // Likert Scale Handling
 function displayLikertScale() {
-    console.log('Displaying Likert scale');
-    // Ensure page transition
     showPage('likert-page');
-
-    $('input[name="confidence"]').prop('checked', false); // Reset radio buttons
-    // Reset the next Likert button
-
+    $('input[name="confidence"]').prop('checked', false);
     $('#next-likert').prop('disabled', true);
 
-    // Handle Likert option change
-    $('.likert-option input').off('change').on('change', function () {
+    $('.likert-option input').off('change').on('change', function() {
         $('#next-likert').prop('disabled', false);
     });
 
-    // Handle Likert next button
-    $('#next-likert').off('click').on('click', function () {
+    $('#next-likert').off('click').on('click', function() {
         const likertValue = $('input[name="confidence"]:checked').val();
         responses.likertScales.push({
             questionId: questions[currentQuestion].id,
@@ -300,7 +303,6 @@ function displayLikertScale() {
 function moveToNextQuestion() {
     currentQuestion++;
 
-    // Reset states for the next question
     $('.option, .options-table tr').removeClass('selected');
     $('#next-question').prop('disabled', true);
 
@@ -315,66 +317,24 @@ function moveToNextQuestion() {
 function showStressAssessment() {
     showPage('stress-assessment');
 
-    // Reset stress assessment state
     $('input[name="free-stress"]').prop('checked', false);
     $('input[name="stress-level"]').prop('checked', false);
     $('.stress-scale').addClass('hidden');
     updateStressNextButton();
 
-    // Handle stress inputs
-    $('input[name="free-stress"]').off('change').on('change', function () {
+    $('input[name="free-stress"]').off('change').on('change', function() {
         const showScale = $(this).val() === 'yes';
         $('.stress-scale').toggleClass('hidden', !showScale);
         updateStressNextButton();
     });
 
-    $('input[name="stress-level"]').off('change').on('change', function () {
-        updateStressNextButton();
-    });
+    $('input[name="stress-level"]').off('change').on('change', updateStressNextButton);
 
-    // Handle the next button for stress assessment
-    $('#next-stress-assessment').off('click').on('click', function () {
+    $('#next-stress-assessment').off('click').on('click', function() {
         saveStressAssessment();
-
-        // Show the final stress type question before submission
         showStressTypeQuestion();
     });
-
-    function showStressTypeQuestion() {
-        const stressQuestionHtml = `
-            <div class="page hidden" id="stress-type-page">
-                <h2>Which type of question made you more stressed?</h2>
-                <div class="stress-options">
-                    <input type="radio" name="stress-type" value="time-free" id="stress-free">
-                    <label for="stress-free">Time-Free</label>
-        
-                    <input type="radio" name="stress-type" value="time-bound" id="stress-bound">
-                    <label for="stress-bound">Time-Bound</label>
-                </div>
-                <button id="submit-survey" disabled>Submit</button>
-            </div>
-        `;
-
-        $('.container').append(stressQuestionHtml); // Add question to DOM
-        showPage('stress-type-page'); // Show the new question
-
-        // Enable the submit button when an option is selected
-        $('input[name="stress-type"]').off('change').on('change', function () {
-            $('#submit-survey').prop('disabled', false);
-        });
-
-        // Handle the survey submission
-        $('#submit-survey').off('click').on('click', function () {
-            const selectedStressType = $('input[name="stress-type"]:checked').val();
-            responses.stressAssessment.stressType = selectedStressType;
-
-            // Submit the survey and navigate to the Thank You page
-            submitSurvey();
-            showPage('thank-you-page');
-        });
-    }
 }
-
 
 function updateStressNextButton() {
     const hasAnswer = $('input[name="free-stress"]:checked').length > 0;
@@ -394,8 +354,127 @@ function saveStressAssessment() {
     };
 }
 
-// Data Submission
+function showStressTypeQuestion() {
+    const stressQuestionHtml = `
+        <div class="page" id="stress-type-page">
+            <h2>Which type of question made you more stressed?</h2>
+            <div class="stress-options">
+                <input type="radio" name="stress-type" value="time-free" id="stress-free">
+                <label for="stress-free">Time-Free</label>
+    
+                <input type="radio" name="stress-type" value="time-bound" id="stress-bound">
+                <label for="stress-bound">Time-Bound</label>
+            </div>
+            <button id="submit-survey" disabled>Submit</button>
+        </div>
+    `;
+
+    $('.container').append(stressQuestionHtml);
+    showPage('stress-type-page');
+
+    $('input[name="stress-type"]').on('change', function() {
+        $('#submit-survey').prop('disabled', false);
+    });
+
+    $('#submit-survey').on('click', function() {
+        const selectedStressType = $('input[name="stress-type"]:checked').val();
+        responses.stressAssessment.stressType = selectedStressType;
+        submitSurvey();
+    });
+}
+
+// Form Submission
+// Format the submission data
+function formatSubmissionData(responses) {
+    return {
+        timestamp: new Date().toISOString(),
+        basicInfo: {
+            name: responses.basicInfo.name,
+            age: responses.basicInfo.age,
+            gender: responses.basicInfo.gender
+        },
+        questions: responses.questions.map(q => ({
+            questionId: q.questionId,
+            response: q.response,
+            timeSpent: q.timeSpent
+        })),
+        likertScales: responses.likertScales.map(l => ({
+            questionId: l.questionId,
+            confidence: l.confidence
+        })),
+        stressAssessment: {
+            freeStress: responses.stressAssessment.freeStress,
+            stressLevel: responses.stressAssessment.stressLevel,
+            stressType: responses.stressAssessment.stressType
+        }
+    };
+}
+
+// Submit data to Google Sheets
+async function submitToGoogleSheets(data) {
+    // Replace with your Google Apps Script deployment URL
+    const endpoint = 'https://script.google.com/macros/s/AKfycbzQsWVOXsNpd0IdYwKYQylOi1Ket1SQn9PIvE-4kgUZ7n0RM9gg84I3ovxMB1p1u8A/exec';
+    
+    try {
+        // Show loading indicator
+        showLoadingSpinner();
+        
+        const formattedData = formatSubmissionData(data);
+        
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            mode: 'no-cors',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formattedData)
+        });
+
+        // Hide loading indicator
+        hideLoadingSpinner();
+        
+        return true;
+    } catch (error) {
+        // Hide loading indicator
+        hideLoadingSpinner();
+        
+        console.error('Submission error:', error);
+        throw error;
+    }
+}
+
+// Helper functions for loading indicator
+function showLoadingSpinner() {
+    const spinner = document.createElement('div');
+    spinner.id = 'loading-spinner';
+    spinner.innerHTML = `
+        <div class="spinner-overlay">
+            <div class="spinner-content">
+                <div class="spinner"></div>
+                <p>Submitting your response...</p>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(spinner);
+}
+
+function hideLoadingSpinner() {
+    const spinner = document.getElementById('loading-spinner');
+    if (spinner) {
+        spinner.remove();
+    }
+}
+
+// Main submit function
 function submitSurvey() {
+    // Validate responses before submission
+    if (!validateResponses(responses)) {
+        alert('Please complete all required fields before submitting.');
+        return;
+    }
+
+    // Add submission timestamp
     const data = {
         timestamp: new Date().toISOString(),
         ...responses
@@ -404,51 +483,76 @@ function submitSurvey() {
     // Submit to Google Sheets
     submitToGoogleSheets(data)
         .then(() => {
-            showSubmissionSuccess();
+            // Show success message
+            showSuccessMessage();
+            // Navigate to thank you page
+            showPage('thank-you-page');
         })
         .catch(error => {
-            showSubmissionError();
+            // Show error message
+            showErrorMessage();
             console.error('Submission error:', error);
         });
 }
 
-async function submitToGoogleSheets(data) {
-    const endpoint = 'https://script.google.com/macros/s/AKfycbwtEa2l8B2uyMjaY92nlR63oNYyqJLuwtApWuT12z9z0buhYM5SfloTXF_WuvrEjinP/exec'; // Replace with the Apps Script web app URL
-
-    try {
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
-
-        if (!response.ok) throw new Error('Failed to submit data');
-    } catch (error) {
-        throw error;
+// Validation function
+function validateResponses(responses) {
+    // Check basic info
+    if (!responses.basicInfo ||
+        !responses.basicInfo.name ||
+        !responses.basicInfo.age ||
+        !responses.basicInfo.gender) {
+        return false;
     }
+
+    // Check if all questions were answered
+    if (!responses.questions || responses.questions.length === 0) {
+        return false;
+    }
+
+    // Check if all confidence ratings were provided
+    if (!responses.likertScales || 
+        responses.likertScales.length !== responses.questions.length) {
+        return false;
+    }
+
+    // Check stress assessment
+    if (!responses.stressAssessment ||
+        !responses.stressAssessment.freeStress) {
+        return false;
+    }
+
+    // If stress is "yes", check if level is provided
+    if (responses.stressAssessment.freeStress === 'yes' &&
+        !responses.stressAssessment.stressLevel) {
+        return false;
+    }
+
+    return true;
 }
 
-
-function formatDataForSheet(data) {
-    return [
-        data.timestamp,
-        data.basicInfo.name,
-        data.basicInfo.age,
-        data.basicInfo.gender,
-        JSON.stringify(data.questions),
-        JSON.stringify(data.likertScales),
-        JSON.stringify(data.stressAssessment)
-    ];
+// Success message function
+function showSuccessMessage() {
+    const message = document.createElement('div');
+    message.className = 'success-message';
+    message.textContent = 'Your response has been submitted successfully!';
+    document.body.appendChild(message);
+    
+    setTimeout(() => {
+        message.remove();
+    }, 3000);
 }
 
-function showSubmissionSuccess() {
-    alert('Your response has been recorded successfully');
-}
-
-function showSubmissionError() {
-    alert('There is an issue to submit your form. Please try again after some time');
+// Error message function
+function showErrorMessage() {
+    const message = document.createElement('div');
+    message.className = 'error-message';
+    message.textContent = 'There was an error submitting your response. Please try again.';
+    document.body.appendChild(message);
+    
+    setTimeout(() => {
+        message.remove();
+    }, 3000);
 }
 
 // Initialize survey
@@ -471,12 +575,4 @@ $(document).ready(function() {
         currentQuestion = 0;
         displayQuestion(questions[currentQuestion]);
     });
-
-    $('#submit-survey').on('click', submitSurvey);
 });
-
-function doGet(e) {
-    return ContentService.createTextOutput("Web App is running!")
-      .setMimeType(ContentService.MimeType.TEXT);
-  }
-  
