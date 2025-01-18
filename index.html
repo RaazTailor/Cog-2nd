@@ -73,8 +73,9 @@
                     scale:</p>
                 <p>1=Least Confidence, 5= Fully Confidence</p>
                 <div class="likert-demo">
-                    <span>1</span>
-                    <span>2</span>
+                    <span>1 </span>  
+                    <p>1 2 3 4              5 </p> 
+                 <span>2</span> 
                     <span>3</span>
                     <span>4</span>
                     <span>5</span>
@@ -87,10 +88,14 @@
             </div>
         </div>
 
-        <!-- Question Page Template -->
+        <!-- Question Page -->
         <div class="page hidden" id="question-page">
-            <div class="timer-container">
-                <div id="timer">Time: <span id="time-value">0</span></div>
+            <div class="timer-wrapper">
+                <div class="timer-container">
+                    <div id="timer">
+                        Time: <span id="time-value">0</span>
+                    </div>
+                </div>
             </div>
             <div class="question-container">
                 <h2 id="question-text"></h2>
@@ -98,6 +103,13 @@
                 <button id="next-question" disabled>Next</button>
             </div>
         </div>
+
+        <div id="question-page" class="page hidden">
+            <div id="question-text"></div>
+            <div id="options-container"></div>
+            <button id="next-question" disabled>Next</button>
+        </div>
+        
 
         <!-- Likert Scale Page -->
         <div class="page hidden" id="likert-page">
@@ -128,55 +140,55 @@
             <button id="next-likert" disabled>Next</button>
         </div>
 
-        <!-- Final Stress Assessment Pages -->
-        <div class="page hidden" id="stress-assessment">
-            <div id="time-free-stress" class="stress-section">
-                <h2>Did you feel stress in time limit questions decision?</h2>
-                <div class="stress-options">
-                    <input type="radio" name="free-stress" value="no" id="free-no">
-                    <label for="free-no">No</label>
-                    <input type="radio" name="free-stress" value="yes" id="free-yes">
-                    <label for="free-yes">Yes</label>
+        <!-- Stress Assessment Page -->
+<div class="page hidden" id="stress-assessment">
+    <div id="time-free-stress" class="stress-section">
+        <h2>Did you feel stress in time limit questions decision?</h2>
+        <div class="stress-options">
+            <input type="radio" name="free-stress" value="no" id="free-no">
+            <label for="free-no">No</label>
+            <input type="radio" name="free-stress" value="yes" id="free-yes">
+            <label for="free-yes">Yes</label>
+        </div>
+        <div class="stress-scale hidden">
+            <p>Rate your stress (1= lower to 5= extremely high)</p>
+            <div class="likert-scale">
+                <div class="likert-option">
+                    <input type="radio" name="stress-level" value="1" id="stress-1" required>
+                    <label for="stress-1">1</label>
                 </div>
-                <div class="stress-scale hidden">
-                    <p>Rate your stress (1= lower to 5= extremely high)</p>
-                    <div class="likert-scale">
-                        <!-- Stress scale options -->
-                        <input type="radio" name="stress-level" value="1" id="stress-1" required>
-                        <label for="stress-1">1</label>
-
-                        <input type="radio" name="stress-level" value="2" id="stress-2">
-                        <label for="stress-2">2</label>
-
-                        <input type="radio" name="stress-level" value="3" id="stress-3">
-                        <label for="stress-3">3</label>
-
-                        <input type="radio" name="stress-level" value="4" id="stress-4">
-                        <label for="stress-4">4</label>
-
-                        <input type="radio" name="stress-level" value="5" id="stress-5">
-                        <label for="stress-5">5</label>
-
-                    </div>
+                <div class="likert-option">
+                    <input type="radio" name="stress-level" value="2" id="stress-2">
+                    <label for="stress-2">2</label>
+                </div>
+                <div class="likert-option">
+                    <input type="radio" name="stress-level" value="3" id="stress-3">
+                    <label for="stress-3">3</label>
+                </div>
+                <div class="likert-option">
+                    <input type="radio" name="stress-level" value="4" id="stress-4">
+                    <label for="stress-4">4</label>
+                </div>
+                <div class="likert-option">
+                    <input type="radio" name="stress-level" value="5" id="stress-5">
+                    <label for="stress-5">5</label>
                 </div>
             </div>
-            <button id="next-stress-assessment" disabled>Next</button>
         </div>
-
-        
-
-        <!-- Thank You Page -->
-<div class="page hidden" id="thank-you-page">
-    <h2>Thank You! 🤗</h2>
-    <p>Your participation in this research is greatly appreciated.</p>
-    <p>Brief debriefing of the experiment:</p>
-    <div class="debriefing">
-        We will check the confidence in decision-making under stress situations.
-        <!-- Debriefing content can be dynamically populated if needed -->
     </div>
+    <button id="next-stress-assessment" disabled>Next</button>
 </div>
-
+        <!-- Thank You Page -->
+        <div class="page hidden" id="thank-you-page">
+            <h2>Thank You! 🤗</h2>
+            <p>Your participation in this research is greatly appreciated.</p>
+            <p>Brief debriefing of the experiment:</p>
+            <div class="debriefing">
+                We will check the confidence in decision-making under stress situations.
+            </div>
+        </div>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="script.js"></script>
 </body>
