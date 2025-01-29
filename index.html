@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research Survey - Decision Making Under Stress</title>
+    <title>Confidence on Decision Under Stress</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <div class="container">
         <!-- Welcome Page -->
         <div class="page" id="welcome-page">
             <h1>Confidence on Decision Under Stress Situation</h1>
             <div class="policy-section">
-                <h2>Policy</h2>
-                <p>This research takes your 15 to 20 minutes. We ensure that the personal Information and data will be
-                    kept confidential.</p>
+                <!-- <h2>Policy</h2> -->
+                <p>This research takes your 15 to 20 minutes. We ensure that the personal Information and data will be kept confidential.</p>
+                <p>Your participation is voluntary in this research, if at any moment you wish to leave the survey you can do so</p>
                 <div class="consent">
                     <input type="checkbox" id="consent-checkbox">
-                    <label for="consent-checkbox">I agree</label>
+                    <label for="consent-checkbox">I am wiling to be a participant </label> 
                 </div>
-                <button id="start-survey" disabled>Start Survey</button>
+                <button id="start-survey" disabled>Start </button>
             </div>
         </div>
 
@@ -32,13 +30,11 @@
                 <div class="form-group">
                     <label for="name">Name:</label>
                     <input type="text" id="name" required>
-                    <span class="validation-message"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="age">Age:</label>
                     <input type="number" id="age" min="18" max="100" required>
-                    <span class="validation-message"></span>
                 </div>
 
                 <div class="form-group">
@@ -50,7 +46,6 @@
                         <option value="transgender">Transgender</option>
                         <option value="others">Others</option>
                     </select>
-                    <span class="validation-message"></span>
                 </div>
 
                 <button type="submit">Next</button>
@@ -61,30 +56,26 @@
         <div class="page hidden" id="instructions-page">
             <h2>Instructions</h2>
             <div class="instructions-content">
-                <p>This survey contains 16 questions: For two categories</p>
+                <p>This survey contains 14 questions: For two categories</p>
                 <ol>
-                    <li>Time free questions</li>
-                    <li>Time limit questions</li>
+                    <li>Time-free questions</li>
+                    <li>Time-limit questions</li>
                 </ol>
-                <p>Both categories of questions will come randomly and in time bound questions you must take decision or
-                    select your option within time-limit. Once the time is up, the next question will appear
-                    automatically.</p>
-                <p>After each answered question, you will be asked to rate your confidence on decision using a Likert
-                    scale:</p>
+                <p>Both categories of questions will come randomly and in time Time-limit questions pages a timer will run and  you must take decision or select your option within time-limit. Once the time is up, the next question will appear automatically.</p>
+                <p>After each answered question, you will be asked to rate your confidence on decision using a scale:</p>
                 <p>1=Least Confidence, 5= Fully Confidence</p>
-                <div class="likert-demo">
-                    <span>1 </span>  
-                    <p>1 2 3 4              5 </p> 
-                 <span>2</span> 
+                <!-- <div class="likert-demo">
+                    <span>1</span>
+                    <span>2</span>
                     <span>3</span>
                     <span>4</span>
                     <span>5</span>
-                </div>
+                </div> -->
                 <div class="consent">
                     <input type="checkbox" id="instructions-checkbox">
                     <label for="instructions-checkbox">I have read the whole instruction and ready to start</label>
                 </div>
-                <button id="start-questions" disabled>Begin Survey</button>
+                <button id="start-questions" disabled>Let's Begin</button>
             </div>
         </div>
 
@@ -92,7 +83,7 @@
         <div class="page hidden" id="question-page">
             <div class="timer-wrapper">
                 <div class="timer-container">
-                    <div id="timer">
+                    <div id="timer" class="timer">
                         Time: <span id="time-value">0</span>
                     </div>
                 </div>
@@ -103,13 +94,6 @@
                 <button id="next-question" disabled>Next</button>
             </div>
         </div>
-
-        <div id="question-page" class="page hidden">
-            <div id="question-text"></div>
-            <div id="options-container"></div>
-            <button id="next-question" disabled>Next</button>
-        </div>
-        
 
         <!-- Likert Scale Page -->
         <div class="page hidden" id="likert-page">
@@ -141,56 +125,73 @@
         </div>
 
         <!-- Stress Assessment Page -->
-<div class="page hidden" id="stress-assessment">
-    <div id="time-free-stress" class="stress-section">
-        <h2>Did you feel stress in time limit questions decision?</h2>
-        <div class="stress-options">
-            <input type="radio" name="free-stress" value="no" id="free-no">
-            <label for="free-no">No</label>
-            <input type="radio" name="free-stress" value="yes" id="free-yes">
-            <label for="free-yes">Yes</label>
-        </div>
-        <div class="stress-scale hidden">
-            <p>Rate your stress (1= lower to 5= extremely high)</p>
-            <div class="likert-scale">
-                <div class="likert-option">
-                    <input type="radio" name="stress-level" value="1" id="stress-1" required>
-                    <label for="stress-1">1</label>
+        <div class="page hidden" id="stress-assessment">
+            <div id="time-free-stress" class="stress-section">
+                <h2>Did you feel stress?</h2>
+                <div class="stress-options">
+                    <input type="radio" name="free-stress" value="no" id="free-no">
+                    <label for="free-no">No</label>
+                    <input type="radio" name="free-stress" value="yes" id="free-yes">
+                    <label for="free-yes">Yes</label>
                 </div>
-                <div class="likert-option">
-                    <input type="radio" name="stress-level" value="2" id="stress-2">
-                    <label for="stress-2">2</label>
-                </div>
-                <div class="likert-option">
-                    <input type="radio" name="stress-level" value="3" id="stress-3">
-                    <label for="stress-3">3</label>
-                </div>
-                <div class="likert-option">
-                    <input type="radio" name="stress-level" value="4" id="stress-4">
-                    <label for="stress-4">4</label>
-                </div>
-                <div class="likert-option">
-                    <input type="radio" name="stress-level" value="5" id="stress-5">
-                    <label for="stress-5">5</label>
+                <div class="stress-scale hidden">
+                    <p>Rate your stress (1= lower to 5= extremely high)</p>
+                    <div class="likert-scale">
+                        <div class="likert-option">
+                            <input type="radio" name="stress-level" value="1" id="stress-1">
+                            <label for="stress-1">1</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" name="stress-level" value="2" id="stress-2">
+                            <label for="stress-2">2</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" name="stress-level" value="3" id="stress-3">
+                            <label for="stress-3">3</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" name="stress-level" value="4" id="stress-4">
+                            <label for="stress-4">4</label>
+                        </div>
+                        <div class="likert-option">
+                            <input type="radio" name="stress-level" value="5" id="stress-5">
+                            <label for="stress-5">5</label>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <button id="next-stress-assessment" disabled>Next</button>
         </div>
-    </div>
-    <button id="next-stress-assessment" disabled>Next</button>
-</div>
+
+        <!-- Stress Type Page -->
+        <div class="page hidden" id="stress-type-page">
+            <h2>In which categories of questions do you feel stress?</h2>
+            <div class="stress-type-options">
+                <div class="stress-option">
+                    <input type="radio" name="stress-type" value="Timefree" id="stress-time">
+                    <label for="stress-time">Time-free</label>
+                </div>
+                <div class="stress-option">
+                    <input type="radio" name="stress-type" value="Timebound" id="stress-decision">
+                    <label for="stress-decision">Time-limit</label>
+                </div>
+                
+            </div>
+            <button id="submit-survey" disabled>Submit</button>
+        </div>
+
         <!-- Thank You Page -->
         <div class="page hidden" id="thank-you-page">
-            <h2>Thank You! 🤗</h2>
-            <p>Your participation in this research is greatly appreciated.</p>
-            <p>Brief debriefing of the experiment:</p>
-            <div class="debriefing">
+            <h2>Thank You for participation in this research</h2>
+            <p>Your responses in this research is greatly appreciated.</p>
+            <p>we ensure your data will kept confidential</p>
+            <!-- <div class="debriefing">
                 We will check the confidence in decision-making under stress situations.
-            </div>
+            </div> -->
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="script.js"></script>
 </body>
-
 </html>
