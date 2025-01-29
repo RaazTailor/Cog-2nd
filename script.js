@@ -111,7 +111,7 @@ $(document).ready(function () {
         $("#time-value").text(question.timeLimit || 0);
 
         if (question.displayType === "table") {
-            displayTableOptions(question.options, $optionsContainer);
+            displayTableOptions(question.headers,question.options, $optionsContainer);
         } else {
             displayNormalOptions(question.options, $optionsContainer);
         }
@@ -374,6 +374,7 @@ $(document).ready(function () {
         $table.append($tbody);
         container.append($table);
     }
+    
     // Questions data structure
    
 // Questions data structure
@@ -395,7 +396,7 @@ const questions = [
     ],
     displayType: "table",
     background: "#ff0000",
-    timeLimit: 50
+    timeLimit: 25
 },
 
 // Pair 1 (Time-Free Version): Financial Bonus
@@ -425,7 +426,7 @@ const questions = [
     ],
     displayType: "normal",
     background: "#ff0000",
-    timeLimit: 50
+    timeLimit: 25
 },
 
 // Pair 3 (Time-Free Version): Disaster Relief
@@ -459,7 +460,7 @@ const questions = [
     ],
     displayType: "table",
     background: "#ff0000",
-    timeLimit: 60
+    timeLimit: 30
 },
 
 // Pair 7 (Time-Free Version): Research Grants
@@ -489,7 +490,7 @@ const questions = [
     ],
     displayType: "normal",
     background: "#ff0000",
-    timeLimit: 50
+    timeLimit: 25
 },
 
 // Pair 6 (Time-Free Version): Art Exhibit
@@ -521,7 +522,7 @@ const questions = [
     ],
     displayType: "normal",
     background: "#ff0000",
-    timeLimit: 60
+    timeLimit: 30
 },
 
 // Pair 3 (Time-Limit Version): Disaster Relief
@@ -537,7 +538,7 @@ const questions = [
     ],
     displayType: "table",
     background: "#ff0000",
-    timeLimit: 60
+    timeLimit: 35
 },
 
 // Pair 5 (Time-Free Version): Healthcare
@@ -569,7 +570,7 @@ const questions = [
     ],
     displayType: "normal",
     background: "#ff0000",
-    timeLimit: 60
+    timeLimit: 30
 },
 
 // Pair 4 (Time-Free Version): Startup Funding
