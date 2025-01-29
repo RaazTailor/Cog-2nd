@@ -1,1 +1,1 @@
-# Cog-2nd
+# confidence-on-decision
